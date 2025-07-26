@@ -1,0 +1,34 @@
+"""
+📊 Model Evaluation and Performance Metrics
+------------------------------------------
+This script helps you evaluate your machine learning classification or regression model using:
+- R² Score (for regression)
+- Accuracy (for classification)
+- Confusion Matrix
+- Classification Report
+"""
+
+# 🧠 Predict using the trained model
+y_pred = model.predict(X_test)
+
+# 📈 R² Score (Used for regression problems)
+from sklearn.metrics import r2_score
+
+r2_score_value = r2_score(y_test, y_pred)
+print("🔹 R² Score:", r2_score_value)
+
+# ✅ Accuracy Score (Used for classification problems)
+from sklearn.metrics import accuracy_score
+
+accuracy_value = accuracy_score(y_test, y_pred)
+print("🔹 Accuracy Score:", accuracy_value)
+
+# 🧾 Classification Report & Confusion Matrix (For classification)
+from sklearn.metrics import confusion_matrix, classification_report
+
+print("\n📋 Classification Report:")
+print(classification_report(y_test, y_pred))
+
+print("🔲 Confusion Matrix:")
+conf_matrix = confusion_matrix(y_test, y_pred)
+print(conf_matrix)
