@@ -1,0 +1,32 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+from sklearn.datasets import fetch_california_housing
+california = fetch_california_housing(as_frame=True)
+dataset = california.frame
+
+
+
+dataset.head()
+
+# Dividing the dataset into independent and dependent
+x = dataset.drop(columns=["MedHouseVal"])
+y = dataset["MedHouseVal"]
+
+# Train Test Split
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42) 
+
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import GridSearchCV
+
+ridge = Ridge()
+params = {'alpha':[1e-15,1e-10,1e-8,1e-3,1e-2,1,5,10,20,30,35,40,45,50,55,60,71,73,75,85]}
+
+ridge_regressor = GridSearchCV(ridge, params, scoring="neg_mean_squared_error", cv=5)
+ridge_regressor.fit(X_train,y_train)
+print('Best Params ', ridge_regressor.best_params_)
+print('Best Score ', ridge_regressor.best_score_)
