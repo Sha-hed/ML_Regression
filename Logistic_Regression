@@ -1,0 +1,47 @@
+import numpy as np
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+%matplotlib inline
+
+from sklearn.datasets import fetch_california_housing
+california = fetch_california_housing(as_frame=True)
+dataset = california.frame
+
+
+
+dataset.head()
+
+# Dividing the dataset into independent and dependent
+x = dataset.drop(columns=["MedHouseVal"])
+y = dataset["MedHouseVal"]
+
+# Train Test Split
+from sklearn.model_selection import train_test_split 
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)  
+
+from sklearn.linear_model import LogisticRegression
+from sklearn.datasets import load_breast_cancer
+df = load_breast_cancer()
+dataset = pd.DataFrame(df.data)
+dataset.columns = df.feature_names
+dataset.head()
+x = pd.DataFrame(df['data'], columns=df['feature_names'])
+y = pd.DataFrame(df['target'], columns=['Target'])
+y['Target'].value_counts()
+
+# Train Test Split
+from sklearn.model_selection import train_test_split
+
+X_train, X_test, y_train, y_test = train_test_split(x, y, test_size=0.33, random_state=42)
+
+params = [ { 'C' : [1,5,10]}, {'max_iter' : [100,150]}]
+
+model1 = LogisticRegression(C=100, max_iter=100)
+model = GridSearchCV(model1, param_grid=params, scoring='f1', cv=5)
+model.fit(X_train, y_train)
+
+print("Best Params Dekhbo Ekn Amra ",model.best_params_)
+print("Best Score Dekhbo Ekn Amra ",model.best_score_)
+
+
